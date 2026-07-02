@@ -1,17 +1,52 @@
+import LivroRepository from "./LivroRepository.js";
+import AppError from "../../errors/AppError.js";
+
 class LivroService {
+  async create(data) {
+    return await LivroRepository.create(data);
+  }
 
-  async create(data) {}
+  async findAll() {
+    return await LivroRepository.findAll();
+  }
 
-  async findAll() {}
+  async findAllWithDetails() {
+    return await LivroRepository.findAllWithDetails();
+  }
 
-  async findById(id) {}
+  async findById(id) {
+    const livro = await LivroRepository.findById(id);
 
-  async update(id, data) {}
+    if (!livro) {
+      throw new AppError("Livro não encontrado.", 404);
+    }
 
-  async delete(id) {}
+    return livro;
+  }
 
-  async vincularAutor(livroId, autorId) {}
+  async update(id, data) {
+    const livro = await LivroRepository.findById(id);
 
+    if (!livro) {
+      throw new AppError("Livro não encontrado.", 404);
+    }
+
+    return await LivroRepository.update(id, data);
+  }
+
+  async delete(id) {
+    const livro = await LivroRepository.findById(id);
+
+    if (!livro) {
+      throw new AppError("Livro não encontrado.", 404);
+    }
+
+    await LivroRepository.delete(id);
+
+    return {
+      message: "Livro removido com sucesso."
+    };
+  }
 }
 
 export default new LivroService();

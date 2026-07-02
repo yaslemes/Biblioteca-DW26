@@ -1,15 +1,105 @@
+import pool from "../../database/connection.js";
+
 class EmprestimoRepository {
+  async create(emprestimo) {
+    const {
+      usuario_id,
+      livro_id,
+      data_emprestimo,
+      data_prevista_devolucao,
+      data_devolucao,
+      status,
+    } = emprestimo;
 
-  async create(data) {}
+    const { rows } = await pool.query(
+      `
+      INSERT INTO emprestimos
+      (usuario_id, livro_id, data_emprestimo, data_prevista_devolucao, data_devolucao, status)
+      VALUES ($1,$2,$3,$4,$5,$6)
+      RETURNING *;
+      `,
+      [
+        usuario_id,
+        livro_id,
+        data_emprestimo,
+        data_prevista_devolucao,
+        data_devolucao,
+        status,
+      ]
+    );
 
-  async findAll() {}
+    return rows[0];
+  }
 
-  async findById(id) {}
+  async findAll() {
+    const { rows } = await pool.query(`
+      SELECT *
+      FROM emprestimos
+      ORDER BY id;
+    `);
 
-  async update(id, data) {}
+    return rows;
+  }
 
-  async delete(id) {}
+  async findById(id) {
+    const { rows } = await pool.query(
+      `
+      SELECT *
+      FROM emprestimos
+      WHERE id = $1;
+      `,
+      [id]
+    );
 
+    return rows[0];
+  }
+
+  async update(id, emprestimo) {
+    const {
+      usuario_id,
+      livro_id,
+      data_emprestimo,
+      data_prevista_devolucao,
+      data_devolucao,
+      status,
+    } = emprestimo;
+
+    const { rows } = await pool.query(
+      `
+      UPDATE emprestimos
+      SET
+        usuario_id=$1,
+        livro_id=$2,
+        data_emprestimo=$3,
+        data_prevista_devolucao=$4,
+        data_devolucao=$5,
+        status=$6
+      WHERE id=$7
+      RETURNING *;
+      `,
+      [
+        usuario_id,
+        livro_id,
+        data_emprestimo,
+        data_prevista_devolucao,
+        data_devolucao,
+        status,
+        id,
+      ]
+    );
+
+    return rows[0];
+  }
+
+  async delete(id) {
+    await pool.query(
+      `
+      DELETE FROM emprestimos
+      WHERE id = $1;
+      `,
+      [id]
+    );
+  }
 }
 
 export default new EmprestimoRepository();

@@ -1,15 +1,13 @@
 import EmprestimoController from "./EmprestimoController.js";
 
 export default async function emprestimoRoutes(app) {
+  app.post("/", EmprestimoController.create);
 
-  app.post("/emprestimos", EmprestimoController.create);
+  app.get("/", EmprestimoController.findAll);
 
-  app.get("/emprestimos", EmprestimoController.findAll);
+  app.get("/:id", EmprestimoController.findById);
 
-  app.get("/emprestimos/:id", EmprestimoController.findById);
+  app.put("/:id", EmprestimoController.update);
 
-  app.patch("/emprestimos/:id", EmprestimoController.update);
-
-  app.delete("/emprestimos/:id", EmprestimoController.delete);
-
+  app.delete("/:id", EmprestimoController.delete);
 }
