@@ -2,8 +2,8 @@ import Fastify from "fastify";
 import env from "./config/env.js";
 import AppErrorHandler from "./errors/AppErrorHandler.js";
 
-import livroRoutes from "./features/livros/index.js";
-import emprestimoRoutes from "./features/emprestimos/index.js";
+import routes from "./routes/index.js";
+
 
 const app = Fastify({
   logger: true,
@@ -15,15 +15,9 @@ app.get("/", async () => {
   };
 });
 
-// Rotas de livros
-app.register(livroRoutes, {
-  prefix: "/livros",
-});
+// Rotas 
+app.register(routes);
 
-// Rotas de empréstimos
-app.register(emprestimoRoutes, {
-  prefix: "/emprestimos",
-});
 
 app.setErrorHandler(AppErrorHandler);
 

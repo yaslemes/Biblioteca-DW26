@@ -1,0 +1,226 @@
+@baseUrl = http://localhost:3333
+
+###########################################################
+###################### API ###############################
+###########################################################
+
+### API Rodando
+GET {{baseUrl}}/
+
+###########################################################
+##################### USUÁRIOS ############################
+###########################################################
+
+### Listar usuários
+GET {{baseUrl}}/usuarios
+
+###
+
+### Buscar usuário por ID
+GET {{baseUrl}}/usuarios/1
+
+###
+
+### Criar usuário
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Pedro Henrique",
+  "email": "pedro@email.com",
+  "cpf": "777.777.777-77",
+  "telefone": "(44)99999-7777"
+}
+
+###
+
+### Atualizar usuário
+PUT {{baseUrl}}/usuarios/1
+Content-Type: application/json
+
+{
+  "nome": "João Silva Atualizado",
+  "email": "joao@email.com",
+  "cpf": "111.111.111-11",
+  "telefone": "(44)99999-0000"
+}
+
+###
+
+### Deletar usuário
+DELETE {{baseUrl}}/usuarios/6
+
+###
+
+### Testar e-mail duplicado
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Outro Usuário",
+  "email": "joao@email.com",
+  "cpf": "999.999.999-99",
+  "telefone": "(44)99999-9999"
+}
+
+###
+
+### Buscar usuário inexistente
+GET {{baseUrl}}/usuarios/999
+
+###########################################################
+###################### AUTORES ############################
+###########################################################
+
+### Listar autores
+GET {{baseUrl}}/autores
+
+###
+
+### Buscar autor por ID
+GET {{baseUrl}}/autores/1
+
+###
+
+### Criar autor
+POST {{baseUrl}}/autores
+Content-Type: application/json
+
+{
+  "nome": "Clarice Lispector",
+  "nacionalidade": "Brasileira",
+  "data_nascimento": "1920-12-10"
+}
+
+###
+
+### Atualizar autor
+PUT {{baseUrl}}/autores/1
+Content-Type: application/json
+
+{
+  "nome": "Machado de Assis",
+  "nacionalidade": "Brasileiro",
+  "data_nascimento": "1839-06-21"
+}
+
+###
+
+### Deletar autor
+DELETE {{baseUrl}}/autores/6
+
+###
+
+### Buscar autor inexistente
+GET {{baseUrl}}/autores/999
+
+###########################################################
+###################### LIVROS #############################
+###########################################################
+
+### Listar livros
+GET {{baseUrl}}/livros
+
+###
+
+### Listar livros com detalhes (JOIN)
+GET {{baseUrl}}/livros/detalhes
+
+###
+
+### Buscar livro por ID
+GET {{baseUrl}}/livros/1
+
+###
+
+### Criar livro
+POST {{baseUrl}}/livros
+Content-Type: application/json
+
+{
+  "titulo": "Código Limpo",
+  "isbn": "9780132350884",
+  "editora": "Alta Books",
+  "ano_publicacao": 2008,
+  "categoria_id": 2,
+  "quantidade_total": 5,
+  "quantidade_disponivel": 5
+}
+
+###
+
+### Atualizar livro
+PUT {{baseUrl}}/livros/1
+Content-Type: application/json
+
+{
+  "titulo": "Dom Casmurro",
+  "isbn": "9788535914849",
+  "editora": "Ática",
+  "ano_publicacao": 1899,
+  "categoria_id": 1,
+  "quantidade_total": 10,
+  "quantidade_disponivel": 8
+}
+
+###
+
+### Deletar livro
+DELETE {{baseUrl}}/livros/6
+
+###
+
+### Buscar livro inexistente
+GET {{baseUrl}}/livros/999
+
+###########################################################
+################### EMPRÉSTIMOS ###########################
+###########################################################
+
+### Listar empréstimos
+GET {{baseUrl}}/emprestimos
+
+###
+
+### Buscar empréstimo por ID
+GET {{baseUrl}}/emprestimos/1
+
+###
+
+### Criar empréstimo
+POST {{baseUrl}}/emprestimos
+Content-Type: application/json
+
+{
+  "usuario_id": 1,
+  "livro_id": 2,
+  "data_emprestimo": "2026-07-03",
+  "data_prevista_devolucao": "2026-07-17",
+  "data_devolucao": null,
+  "status": "EMPRESTADO"
+}
+
+###
+
+### Atualizar empréstimo
+PUT {{baseUrl}}/emprestimos/1
+Content-Type: application/json
+
+{
+  "usuario_id": 1,
+  "livro_id": 2,
+  "data_emprestimo": "2026-07-03",
+  "data_prevista_devolucao": "2026-07-17",
+  "data_devolucao": "2026-07-10",
+  "status": "DEVOLVIDO"
+}
+
+###
+
+### Deletar empréstimo
+DELETE {{baseUrl}}/emprestimos/6
+
+###
+
+### Buscar empréstimo inexistente
+GET {{baseUrl}}/emprestimos/999
