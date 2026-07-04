@@ -38,7 +38,7 @@ Projeto desenvolvido para a disciplina de **Desenvolvimento Web**.
 - [📷 Prints do Swagger](#-prints-do-swagger) -em andamento
 - [🚀 Como Executar](#-como-executar)
 - [📄 Documentação](#-documentação)
-- [🔗 Endpoints](#-endpoints)
+- [🔗 Endpoints](#-endpoints) -em andamento
 - [📈 Fluxo da Aplicação](#-fluxo-da-aplicação)
 - [👥 Equipe](#-equipe)
 
@@ -251,34 +251,6 @@ erDiagram
 | livros | Cadastro dos livros |
 | livros_autores | Relação entre livros e autores |
 | emprestimos | Controle dos empréstimos |
-
----
-
-### 📌 Endpoints de Usuários
-
-<img src="./docs/screenshots/swagger-usuarios.png" alt="Endpoints de Usuários" width="800">
-
-<br><br>
-
-### 📌 Endpoints de Livros
-
-<img src="./docs/screenshots/swagger-livros.png" alt="Endpoints de Livros" width="800">
-
-<br><br>
-
-### 📌 Endpoints de Empréstimos
-
-<img src="./docs/screenshots/swagger-emprestimos.png" alt="Endpoints de Empréstimos" width="800">
-
-<br><br>
-
-### 📌 Exemplo de requisição testada
-
-<img src="./docs/screenshots/swagger-teste-requisicao.png" alt="Teste de requisição no Swagger" width="800">
-
-</div>
-
-> 💡 **Nota:** salve os prints do Swagger na pasta `docs/screenshots/` do repositório com os nomes indicados acima (ou ajuste os caminhos das imagens conforme preferir).
 
 ---
 
