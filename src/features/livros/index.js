@@ -1,15 +1,11 @@
-import controller from "./index.js";
+import LivroRepository from "./LivroRepository.js";
+import LivroService from "./LivroService.js";
+import LivroController from "./LivroController.js";
 
-export default async function livroRoutes(app) {
-  app.post("/", controller.create.bind(controller));
+const livroRepository = new LivroRepository();
 
-  app.get("/", controller.findAll.bind(controller));
+const livroService = new LivroService(livroRepository);
 
-  app.get("/detalhes", controller.findAllWithDetails.bind(controller));
+const livroController = new LivroController(livroService);
 
-  app.get("/:id", controller.findById.bind(controller));
-
-  app.put("/:id", controller.update.bind(controller));
-
-  app.delete("/:id", controller.delete.bind(controller));
-}
+export default livroController;
