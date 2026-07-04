@@ -1,14 +1,16 @@
-import EmprestimoService from "./EmprestimoService.js";
-
 class EmprestimoController {
+  constructor(service) {
+    this.service = service;
+  }
+
   async create(request, reply) {
-    const emprestimo = await EmprestimoService.create(request.body);
+    const emprestimo = await this.service.create(request.body);
 
     return reply.status(201).send(emprestimo);
   }
 
   async findAll(request, reply) {
-    const emprestimos = await EmprestimoService.findAll();
+    const emprestimos = await this.service.findAll();
 
     return reply.send(emprestimos);
   }
@@ -16,7 +18,15 @@ class EmprestimoController {
   async findById(request, reply) {
     const { id } = request.params;
 
-    const emprestimo = await EmprestimoService.findById(id);
+    const emprestimo = await this.service.findById(id);
+
+    return reply.send(emprestimo);
+  }
+
+  async findByIdWithDetails(request, reply) {
+    const { id } = request.params;
+
+    const emprestimo = await this.service.findByIdWithDetails(id);
 
     return reply.send(emprestimo);
   }
@@ -24,7 +34,7 @@ class EmprestimoController {
   async update(request, reply) {
     const { id } = request.params;
 
-    const emprestimo = await EmprestimoService.update(id, request.body);
+    const emprestimo = await this.service.update(id, request.body);
 
     return reply.send(emprestimo);
   }
@@ -32,10 +42,10 @@ class EmprestimoController {
   async delete(request, reply) {
     const { id } = request.params;
 
-    const resultado = await EmprestimoService.delete(id);
+    const resultado = await this.service.delete(id);
 
     return reply.send(resultado);
   }
 }
 
-export default new EmprestimoController();
+export default EmprestimoController;

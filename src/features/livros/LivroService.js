@@ -1,52 +1,23 @@
-import LivroRepository from "./LivroRepository.js";
-import AppError from "../../errors/AppError.js";
+import controller from "./index.js";
 
-class LivroService {
-  async create(data) {
-    return await LivroRepository.create(data);
-  }
+export default async function livroRoutes(app) {
+  app.post("/", controller.create.bind(controller));
 
-  async findAll() {
-    return await LivroRepository.findAll();
-  }
+  app.get("/", controller.findAll.bind(controller));
 
-  async findAllWithDetails() {
-    return await LivroRepository.findAllWithDetails();
-  }
+  app.get(
+    "/detalhes",
+    controller.findAllWithDetails.bind(controller)
+  );
 
-  async findById(id) {
-    const livro = await LivroRepository.findById(id);
+  app.post(
+    "/:id/autores",
+    controller.addAutor.bind(controller)
+  );
 
-    if (!livro) {
-      throw new AppError("Livro não encontrado.", 404);
-    }
+  app.get("/:id", controller.findById.bind(controller));
 
-    return livro;
-  }
+  app.put("/:id", controller.update.bind(controller));
 
-  async update(id, data) {
-    const livro = await LivroRepository.findById(id);
-
-    if (!livro) {
-      throw new AppError("Livro não encontrado.", 404);
-    }
-
-    return await LivroRepository.update(id, data);
-  }
-
-  async delete(id) {
-    const livro = await LivroRepository.findById(id);
-
-    if (!livro) {
-      throw new AppError("Livro não encontrado.", 404);
-    }
-
-    await LivroRepository.delete(id);
-
-    return {
-      message: "Livro removido com sucesso."
-    };
-  }
+  app.delete("/:id", controller.delete.bind(controller));
 }
-
-export default new LivroService();

@@ -1,17 +1,30 @@
-import EmprestimoRepository from "./EmprestimoRepository.js";
 import AppError from "../../errors/AppError.js";
 
 class EmprestimoService {
+  constructor(repository) {
+    this.repository = repository;
+  }
+
   async create(data) {
-    return await EmprestimoRepository.create(data);
+    return await this.repository.create(data);
   }
 
   async findAll() {
-    return await EmprestimoRepository.findAll();
+    return await this.repository.findAll();
   }
 
   async findById(id) {
-    const emprestimo = await EmprestimoRepository.findById(id);
+    const emprestimo = await this.repository.findById(id);
+
+    if (!emprestimo) {
+      throw new AppError("Empréstimo não encontrado.", 404);
+    }
+
+    return emprestimo;
+  }
+
+  async findByIdWithDetails(id) {
+    const emprestimo = await this.repository.findByIdWithDetails(id);
 
     if (!emprestimo) {
       throw new AppError("Empréstimo não encontrado.", 404);
@@ -21,28 +34,28 @@ class EmprestimoService {
   }
 
   async update(id, data) {
-    const emprestimo = await EmprestimoRepository.findById(id);
+    const emprestimo = await this.repository.findById(id);
 
     if (!emprestimo) {
       throw new AppError("Empréstimo não encontrado.", 404);
     }
 
-    return await EmprestimoRepository.update(id, data);
+    return await this.repository.update(id, data);
   }
 
   async delete(id) {
-    const emprestimo = await EmprestimoRepository.findById(id);
+    const emprestimo = await this.repository.findById(id);
 
     if (!emprestimo) {
       throw new AppError("Empréstimo não encontrado.", 404);
     }
 
-    await EmprestimoRepository.delete(id);
+    await this.repository.delete(id);
 
     return {
-      message: "Empréstimo removido com sucesso."
+      message: "Empréstimo removido com sucesso.",
     };
   }
 }
 
-export default new EmprestimoService();
+export default EmprestimoService;

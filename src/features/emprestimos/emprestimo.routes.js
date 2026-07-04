@@ -1,13 +1,18 @@
-import EmprestimoController from "./EmprestimoController.js";
+import controller from "./index.js";
 
 export default async function emprestimoRoutes(app) {
-  app.post("/", EmprestimoController.create);
+  app.post("/", controller.create.bind(controller));
 
-  app.get("/", EmprestimoController.findAll);
+  app.get("/", controller.findAll.bind(controller));
 
-  app.get("/:id", EmprestimoController.findById);
+  app.get(
+    "/:id/detalhes",
+    controller.findByIdWithDetails.bind(controller)
+  );
 
-  app.put("/:id", EmprestimoController.update);
+  app.get("/:id", controller.findById.bind(controller));
 
-  app.delete("/:id", EmprestimoController.delete);
+  app.put("/:id", controller.update.bind(controller));
+
+  app.delete("/:id", controller.delete.bind(controller));
 }

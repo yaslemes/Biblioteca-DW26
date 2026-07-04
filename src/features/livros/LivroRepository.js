@@ -107,6 +107,19 @@ class LivroRepository {
     );
   }
 
+  async addAutor(livroId, autorId) {
+    const { rows } = await pool.query(
+      `
+      INSERT INTO livros_autores (livro_id, autor_id)
+      VALUES ($1, $2)
+      RETURNING *;
+      `,
+      [livroId, autorId]
+    );
+
+    return rows[0];
+  }
+
   async findAllWithDetails() {
     const { rows } = await pool.query(`
       SELECT
@@ -142,4 +155,4 @@ class LivroRepository {
   }
 }
 
-export default new LivroRepository();
+export default LivroRepository;
