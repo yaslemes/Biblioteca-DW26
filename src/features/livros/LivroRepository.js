@@ -153,6 +153,51 @@ class LivroRepository {
 
     return rows;
   }
+
+  async decreaseQuantidadeDisponivel(id) {
+    const { rows } = await pool.query(
+      `
+      UPDATE livros
+      SET quantidade_disponivel = quantidade_disponivel - 1
+      WHERE id = $1
+        AND quantidade_disponivel > 0
+      RETURNING *;
+      `,
+      [id]
+    );
+
+    return rows[0];
+  }
+
+  async increaseQuantidadeDisponivel(id) {
+    const { rows } = await pool.query(
+      `
+      UPDATE livros
+      SET quantidade_disponivel = quantidade_disponivel + 1
+      WHERE id = $1
+        AND quantidade_disponivel < quantidade_total
+      RETURNING *;
+      `,
+      [id]
+    );
+
+    return rows[0];
+  }
+
+  async hasEmprestimoAtivo(id) {
+    const { rows } = await pool.query(
+      `
+      SELECT id
+      FROM emprestimos
+      WHERE livro_id = $1
+        AND status = 'EMPRESTADO'
+      LIMIT 1;
+      `,
+      [id]
+    );
+
+    return rows.length > 0;
+  }
 }
 
 export default LivroRepository;
