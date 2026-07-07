@@ -118,6 +118,7 @@ Durante o projeto foram aplicados conceitos como:
 - Consultas com JOIN
 - Swagger/OpenAPI
 - Injeção de Dependência
+- Regras de Negócio
 - Repository Pattern
 - Service Layer
 - Tratamento centralizado de erros
@@ -134,6 +135,7 @@ Durante o projeto foram aplicados conceitos como:
 | Swagger | Documentação |
 | Dotenv | Variáveis de Ambiente |
 | Nodemon | Desenvolvimento |
+| Supabase | Hospedagem do banco PostgreSQL
 
 ---
 
@@ -279,11 +281,11 @@ npm install
 ```env
 PORT=3333
 
-DB_HOST=localhost
+DB_HOST=SEU_HOST_SUPABASE
 DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=sua_senha
-DB_NAME=biblioteca_db
+DB_USER=SEU_USUARIO
+DB_PASSWORD=SUA_SENHA
+DB_NAME=postgres
 ```
 
 ## Executar o banco
@@ -342,6 +344,7 @@ No Swagger é possível:
 | POST | `/usuarios` |
 | GET | `/usuarios` |
 | GET | `/usuarios/:id` |
+| GET | `/usuarios/:id/detalhes` |
 | PUT | `/usuarios/:id` |
 | DELETE | `/usuarios/:id` |
 
@@ -411,8 +414,8 @@ sequenceDiagram
 
 | Integrante | Responsabilidades |
 |------------|-------------------|
-| **Yasmym Lemes** | Desenvolvimento dos módulos de Livros e Empréstimos, consultas com JOIN, Swagger, Injeção de Dependência e documentação |
-| **Isabely** | Modelagem do banco de dados, módulos de Usuários e Autores, configuração inicial e tratamento de erros |
+| **Yasmym Lemes** | Desenvolvimento dos módulos de Livros e Empréstimos, consultas com JOIN, documentação da API com Swagger, configuração da Injeção de Dependência e documentação do projeto. |
+| **Isabely Turquino** | Modelagem do banco de dados, configuração da conexão com o banco de dados, desenvolvimento dos módulos de Usuários e Autores, configuração inicial da aplicação e tratamento global de erros.|
 
 ---
 

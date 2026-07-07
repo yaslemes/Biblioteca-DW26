@@ -68,6 +68,22 @@ Content-Type: application/json
 ### Buscar usuário inexistente
 GET {{baseUrl}}/usuarios/999
 
+
+### Buscar usuário com detalhes (JOIN)
+GET {{baseUrl}}/usuarios/1/detalhes
+
+
+### Testar CPF duplicado
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+
+{
+  "nome": "Usuário CPF Duplicado",
+  "email": "cpfduplicado@email.com",
+  "cpf": "111.111.111-11",
+  "telefone": "(44)98888-8888"
+}
+
 ###########################################################
 ###################### AUTORES ############################
 ###########################################################
@@ -113,6 +129,9 @@ DELETE {{baseUrl}}/autores/6
 
 ### Buscar autor inexistente
 GET {{baseUrl}}/autores/999
+
+### Testar exclusão de autor vinculado a livro
+DELETE {{baseUrl}}/autores/1
 
 ###########################################################
 ###################### LIVROS #############################
