@@ -38,4 +38,12 @@ export default class UsuarioController {
 
     return reply.status(204).send();
   }
+
+  async findDetailsById(request, reply) {
+    const { id } = request.params;
+
+    const usuario = await this.usuarioService.findDetailsById(id);
+
+    return reply.status(200).send(usuario);
+  }
 }

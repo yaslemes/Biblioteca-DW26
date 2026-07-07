@@ -47,4 +47,17 @@ export default class AutorRepository {
   async delete(id) {
     await pool.query("DELETE FROM autores WHERE id = $1", [id]);
   }
+
+  // Verifica se o autor possui livros vinculados
+  async hasBooks(id) {
+    const result = await pool.query(
+      `SELECT 1
+       FROM livros_autores
+       WHERE autor_id = $1
+       LIMIT 1`,
+      [id]
+    );
+
+    return result.rowCount > 0;
+  }
 }
