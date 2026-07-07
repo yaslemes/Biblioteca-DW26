@@ -1,7 +1,7 @@
 {
   "name": "biblioteca-dw26",
   "version": "1.0.0",
-  "description": "",
+  "description": "<div align=\"center\">",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
