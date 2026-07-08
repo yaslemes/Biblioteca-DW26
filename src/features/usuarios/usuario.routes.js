@@ -1,9 +1,17 @@
 import usuarioController from "./index.js";
 
 export default async function usuarioRoutes(app) {
-  app.get("/", usuarioController.findAll.bind(usuarioController));
+  app.get(
+    "/",
+    {
+      schema: {
+        tags: ["Usuários"],
+        summary: "Lista todos os usuários",
+      },
+    },
+    usuarioController.findAll.bind(usuarioController),
+  );
 
-  // Consulta relacional (JOIN)
   app.get(
     "/:id/detalhes",
     {
@@ -22,8 +30,47 @@ export default async function usuarioRoutes(app) {
     usuarioController.findDetailsById.bind(usuarioController),
   );
 
-  app.get("/:id", usuarioController.findById.bind(usuarioController));
-  app.post("/", usuarioController.create.bind(usuarioController));
-  app.put("/:id", usuarioController.update.bind(usuarioController));
-  app.delete("/:id", usuarioController.delete.bind(usuarioController));
+  app.get(
+    "/:id",
+    {
+      schema: {
+        tags: ["Usuários"],
+        summary: "Busca um usuário por ID",
+      },
+    },
+    usuarioController.findById.bind(usuarioController),
+  );
+
+  app.post(
+    "/",
+    {
+      schema: {
+        tags: ["Usuários"],
+        summary: "Cadastra um usuário",
+      },
+    },
+    usuarioController.create.bind(usuarioController),
+  );
+
+  app.put(
+    "/:id",
+    {
+      schema: {
+        tags: ["Usuários"],
+        summary: "Atualiza um usuário",
+      },
+    },
+    usuarioController.update.bind(usuarioController),
+  );
+
+  app.delete(
+    "/:id",
+    {
+      schema: {
+        tags: ["Usuários"],
+        summary: "Remove um usuário",
+      },
+    },
+    usuarioController.delete.bind(usuarioController),
+  );
 }

@@ -26,9 +26,10 @@ class EmprestimoService {
       ...data,
       status: "EMPRESTADO",
       data_emprestimo: new Date(),
+      data_devolucao: null,
     });
 
-    // 4. Baixa estoque
+    // 4. Diminui quantidade disponível do livro
     await this.livroRepository.decreaseQuantidadeDisponivel(livro_id);
 
     return emprestimo;
@@ -48,6 +49,17 @@ class EmprestimoService {
     return emprestimo;
   }
 
+  async findByIdWithDetails(id) {
+    const emprestimo =
+      await this.emprestimoRepository.findByIdWithDetails(id);
+
+    if (!emprestimo) {
+      throw new AppError("Empréstimo não encontrado", 404);
+    }
+
+    return emprestimo;
+  }
+
   async devolver(id) {
     // 1. Busca empréstimo
     const emprestimo = await this.emprestimoRepository.findById(id);
@@ -56,22 +68,43 @@ class EmprestimoService {
       throw new AppError("Empréstimo não encontrado", 404);
     }
 
+    // 2. Verifica se já foi devolvido
     if (emprestimo.status === "DEVOLVIDO") {
       throw new AppError("Este livro já foi devolvido", 400);
     }
 
-    // 2. Atualiza status
+    // 3. Atualiza empréstimo
     const atualizado = await this.emprestimoRepository.update(id, {
       status: "DEVOLVIDO",
       data_devolucao: new Date(),
     });
 
-    // 3. Sobe estoque do livro
+    // 4. Aumenta quantidade disponível do livro
     await this.livroRepository.increaseQuantidadeDisponivel(
       emprestimo.livro_id
     );
 
     return atualizado;
+  }
+
+  async update(id, data) {
+    const emprestimo = await this.emprestimoRepository.findById(id);
+
+    if (!emprestimo) {
+      throw new AppError("Empréstimo não encontrado", 404);
+    }
+
+    return await this.emprestimoRepository.update(id, data);
+  }
+
+  async delete(id) {
+    const emprestimo = await this.emprestimoRepository.findById(id);
+
+    if (!emprestimo) {
+      throw new AppError("Empréstimo não encontrado", 404);
+    }
+
+    return await this.emprestimoRepository.delete(id);
   }
 }
 

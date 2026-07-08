@@ -1,6 +1,7 @@
 import controller from "./index.js";
 
 export default async function emprestimoRoutes(app) {
+
   app.post(
     "/",
     {
@@ -13,28 +14,24 @@ export default async function emprestimoRoutes(app) {
           required: [
             "usuario_id",
             "livro_id",
-            "data_emprestimo",
-            "data_prevista_devolucao",
-            "status",
+            "data_prevista_devolucao"
           ],
+
           properties: {
             usuario_id: {
               type: "integer",
             },
+
             livro_id: {
               type: "integer",
             },
-            data_emprestimo: {
-              type: "string",
-            },
+
             data_prevista_devolucao: {
               type: "string",
             },
+
             data_devolucao: {
-              type: "string",
-            },
-            status: {
-              type: "string",
+              type: ["string", "null"],
             },
           },
         },
@@ -42,12 +39,42 @@ export default async function emprestimoRoutes(app) {
         response: {
           201: {
             type: "object",
+            properties: {
+              id: {
+                type: "integer",
+              },
+
+              usuario_id: {
+                type: "integer",
+              },
+
+              livro_id: {
+                type: "integer",
+              },
+
+              data_emprestimo: {
+                type: "string",
+              },
+
+              data_prevista_devolucao: {
+                type: "string",
+              },
+
+              data_devolucao: {
+                type: ["string", "null"],
+              },
+
+              status: {
+                type: "string",
+              },
+            },
           },
         },
       },
     },
     controller.create.bind(controller)
   );
+
 
   app.get(
     "/",
@@ -59,6 +86,7 @@ export default async function emprestimoRoutes(app) {
     },
     controller.findAll.bind(controller)
   );
+
 
   app.get(
     "/:id/detalhes",
@@ -80,6 +108,7 @@ export default async function emprestimoRoutes(app) {
     controller.findByIdWithDetails.bind(controller)
   );
 
+
   app.get(
     "/:id",
     {
@@ -99,6 +128,7 @@ export default async function emprestimoRoutes(app) {
     },
     controller.findById.bind(controller)
   );
+
 
   app.put(
     "/:id",
@@ -124,6 +154,7 @@ export default async function emprestimoRoutes(app) {
     controller.update.bind(controller)
   );
 
+
   app.delete(
     "/:id",
     {
@@ -143,4 +174,5 @@ export default async function emprestimoRoutes(app) {
     },
     controller.delete.bind(controller)
   );
+
 }
